@@ -1,4 +1,4 @@
-# Nome do Jogo
+# RPG: Validação_de_sistema
 
 Projeto final da disciplina de Introdução a Algoritmos/Programação, desenvolvido com Python e Pygame.
 
@@ -6,10 +6,9 @@ Este repositório é um template para os grupos da disciplina. A proposta é com
 
 ## Integrantes do grupo
 
-- Nome do integrante 1
-- Nome do integrante 2
-- Nome do integrante 3
-- Nome do integrante 4
+- Raiany Morais
+- Charles Oliveira
+- Moises Do Carmo
 
 ## Estrutura do projeto
 
@@ -22,43 +21,40 @@ Este repositório é um template para os grupos da disciplina. A proposta é com
 
 ## Descrição do jogo
 
-Descreva brevemente a ideia principal do jogo.
+O jogador atua como uma IA de segurança e triagem, analisando fichas de identidade de usuários em tempo real. O objetivo é aprovar fichas legítimas, rejeitar fichas com dados inconsistentes ou mal preenchidos e bloquear tentativas de ataque de hackers, garantindo a segurança e a confiabilidade do sistema até o fim da rodada.
 
-Exemplo:
+O jogo terá um sistema de pontos: se o usuário validar todos os casos da maneira certa, recebe uma quantidade de pontos.
 
-> O jogo consiste em controlar um personagem que deve coletar moedas e evitar obstáculos. O jogador ganha pontos ao coletar itens e perde vidas ao colidir com obstáculos. A partida termina quando o tempo acaba ou quando o jogador perde todas as vidas.
+No final de cada partida vai aparecer uma tela:
+
+* Se ele validou da maneira correta, aparecerá: "Você protegeu o sistema e validou da maneira correta".
+
+* Se validou usuários com erros nas fichas, aparecerá: "Você protegeu o sistema, porém não validou da forma correta".
+
+* Se deixou um hacker invadir o sistema, aparecerá: "VOCÊ DEIXOU O SISTEMA SER INVADIDO".
+
 
 ## Objetivo do jogador
 
-Explique o que o jogador precisa fazer para vencer ou avançar no jogo.
-
-Exemplo:
-
-> O objetivo é coletar a maior quantidade possível de itens antes que o tempo acabe, evitando colisões com os obstáculos.
+O jogador trabalha como uma IA, validando sistemas de fichas de identidade, o seu objetivo é validar fichas corretas, invalidar fichas com dados errados e bloquear hackers que tentarem invadir o sistema.
 
 ## Regras do jogo
 
 Liste as principais regras do jogo.
 
-Exemplo:
+- O jogador escolherar entre três opções: valido, invalido e bloqueado. 
 
-- O jogador se movimenta usando as setas do teclado.
-- Cada item coletado aumenta a pontuação.
-- Colidir com um obstáculo reduz a quantidade de vidas.
-- A partida termina quando o jogador perde todas as vidas ou quando o tempo acaba.
+- Cada partida receberá uma quantidade de pontos; porém, se validar usuários inválidos, ele não receberá pontos, mas a partida continua e os pontos de usuários válidos vão ser contados. Porém, se o jogador aceitar um hacker, ele perde todos os pontos da partida.
+
+- A partida termina quando os casos acaba.
+
+- Na tela do jogador, antes de ele entrar na partida, aparecerá uma página contendo as regras: só validar usuários com fichas corretas; invalidar usuários com a ficha errada (ou seja, quando no lugar do nome estiverem escritos números, nomes no campo errado ou palavras e nomes errados.); e bloquear usuários em que, no lugar do campo, estiver escrita uma linha de código, por exemplo: if true.
 
 ## Controles
 
 Informe as teclas ou comandos utilizados no jogo.
 
-Exemplo:
-
-- Seta para cima: mover para cima
-- Seta para baixo: mover para baixo
-- Seta para esquerda: mover para esquerda
-- Seta para direita: mover para direita
-- Espaço: realizar ação
-- ESC: sair do jogo
+- Escolher uma das opções com a seta para baixo, para cima ou utilizando o mouse, e confirmar a opção apertando Enter.
 
 ## Como executar o projeto
 
