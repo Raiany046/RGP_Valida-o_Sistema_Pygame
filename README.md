@@ -8,7 +8,7 @@ Este repositório é um template para os grupos da disciplina. A proposta é com
 
 - Raiany Morais
 - Charles Oliveira
-- Moises Do Carmo
+- Sávio José Salomão 
 
 ## Estrutura do projeto
 
