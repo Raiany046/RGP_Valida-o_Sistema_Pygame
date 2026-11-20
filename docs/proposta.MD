@@ -13,7 +13,7 @@ A proposta deve apresentar uma ideia simples, clara e viável para ser desenvolv
 ## 2. Integrantes do grupo
 
 - Nome 1: Raiany Morais
-- Nome 2: Moises Do Carmo
+- Nome 2: Sávio José Salomão 
 - Nome 3: Charles Oliveira
 
 ## 3. Tema escolhido
