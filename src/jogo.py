@@ -1,143 +1,98 @@
+import sys
 import pygame
 
-from src.config import (
-    LARGURA_TELA,
-    ALTURA_TELA,
-    FPS,
-    TITULO_JOGO,
-    CINZA,
-    CAMINHO_RECORDE,
-    CAMINHO_SPRITES,
-)
+pygame.init()
 
-from src.funcoes import (
-    calcular_pontos,
-    jogador_perdeu,
-    limitar_valor,
-    verificar_colisao,
-    tomar_dano,
-)
-from src.sprites import pegar_sprite
-from src.dados import (
-    salvar_recorde,
-    carregar_recorde,
-)
+# Inicializar
+tela = pygame.display.set_mode((700, 600))
+pygame.display.set_caption("RPG: IA_Validação_de_sistema")
 
+# Imagens de fundo
+fundo_primeira = pygame.image.load("assets/imagens/escritorio/pag2.jpg").convert()
+fundo_primeira = pygame.transform.scale(fundo_primeira, (700, 600))
 
-def executar_jogo():
-    """Executa o loop principal do jogo e controla estado, colisões e pontuação."""
-    pygame.init()
-    
+fundo_segunda = pygame.image.load("assets/imagens/escritorio/pag1.jpg").convert()
+fundo_segunda = pygame.transform.scale(fundo_segunda, (700, 600))
 
-    tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-    pygame.display.set_caption(TITULO_JOGO)
+fundo_escritorio = pygame.image.load("assets/imagens/escritorio/escritorio.jpg").convert()
+fundo_escritorio = pygame.transform.scale(fundo_escritorio, (700, 600))
 
-    relogio = pygame.time.Clock()
-    rodando = True
+relogio = pygame.time.Clock()
+rodando = True
 
-    # 1. Carregando as imagens recortadas do Spritesheet
+# Controla qual tela está ativa: "INICIO(pag1)", "REGRAS(pag2)" ou "JOGO(casos)"
+tela_atual = "INICIO"
 
+# Retângulos dos botões (ajuste as posições x, y se precisar alinhar com a sua arte)
+btn_jogar = pygame.Rect(200, 375, 220, 38)
+btn_continuar = pygame.Rect(200, 375, 220, 38) # Botão para sair das regras e ir pro jogo
 
-    # Jogador: usando tamanho 110x110 para capturar o quadrado perfeitamente
-    player_image = pegar_sprite(CAMINHO_SPRITES, x=110, y=120, width=190, height=190, scale=0.5)
+btn_valido = pygame.Rect(100, 380, 220, 35)
+btn_invalido = pygame.Rect(100, 430, 235, 35)
+btn_bloqueado = pygame.Rect(100, 480, 260, 35)
 
-    # Gema pequena: usando tamanho 64x64
-    gem_image    = pegar_sprite(CAMINHO_SPRITES, x=900, y=690, width=200, height=200, scale=0.5)
+fonte = pygame.font.SysFont("Arial", 24, bold=True)
 
-    # Morcego: usando tamanho 180x120 por causa das asas abertas
-    bat_image    = pegar_sprite(CAMINHO_SPRITES, x=905, y=1060, width=200, height=130, scale=0.5)
-    
-    # 2. Criando a estrutura de Sprites usando Dicionários
-    jogador = {
-        "imagem": player_image,
-        "rect": player_image.get_rect(topleft=(100, 100))
-    }
-
-    gema = {
-        "imagem": gem_image,
-        "rect": gem_image.get_rect(topleft=(500, 300))
-    }
-    
-    inimigo = {
-        "imagem": bat_image,
-        "rect": bat_image.get_rect(topleft=(200, 500))
-    }
-
-    velocidade = 5
-    pontos = 0
-    vidas = 3
-    recorde = carregar_recorde(CAMINHO_RECORDE)
-
-    # Loop principal: processa entrada, atualiza estado e renderiza a cena.
-    while rodando:
-        relogio.tick(FPS)
-
-        for evento in pygame.event.get():
-            if evento.type == pygame.QUIT:
-                rodando = False
-
-        teclas = pygame.key.get_pressed()
-
-        # Movimentação alterando direto os eixos X e Y do retângulo do jogador
-        if teclas[pygame.K_LEFT]:
-            jogador["rect"].x -= velocidade
-        if teclas[pygame.K_RIGHT]:
-            jogador["rect"].x += velocidade
-        if teclas[pygame.K_UP]:
-            jogador["rect"].y -= velocidade
-        if teclas[pygame.K_DOWN]:
-            jogador["rect"].y += velocidade
-
-        # Limitando o jogador dentro das bordas da tela usando as propriedades do Rect
-        jogador["rect"].x = limitar_valor(jogador["rect"].x, 0, LARGURA_TELA - jogador["rect"].width)
-        jogador["rect"].y = limitar_valor(jogador["rect"].y, 0, ALTURA_TELA - jogador["rect"].height)
-
-        # Verificação de colisão com a Gema (antigo 'item')
-        if verificar_colisao(jogador["rect"], gema["rect"]):
-            pontos = calcular_pontos(pontos, 10)
-
-            # Move a gema de lugar ao coletar
-            gema["rect"].x += 80
-            gema["rect"].y += 50
-
-            # Se a gema sair da tela, volta para uma posição segura
-            if gema["rect"].x > LARGURA_TELA - gema["rect"].width:
-                gema["rect"].x = 50
-            if gema["rect"].y > ALTURA_TELA - gema["rect"].height:
-                gema["rect"].y = 50
-
-        # Verificação de colisão com o Inimigo
-        if verificar_colisao(jogador["rect"], inimigo["rect"]):
-            vidas = tomar_dano(vidas, 1)
-
-            # Afasta o inimigo ao colidir
-            inimigo["rect"].x += 80
-            inimigo["rect"].y += 50
-
-            if inimigo["rect"].x > LARGURA_TELA - inimigo["rect"].width:
-                inimigo["rect"].x = 50
-            if inimigo["rect"].y > ALTURA_TELA - inimigo["rect"].height:
-                inimigo["rect"].y = 50
-
-        # Regras de fim de jogo e recorde
-        if jogador_perdeu(vidas):
+while rodando:
+    # 1. EVENTOS (Cliques e Teclado)
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
             rodando = False
 
-        if pontos > recorde:
-            recorde = pontos
-            salvar_recorde(CAMINHO_RECORDE, recorde)
+        # Clique do mouse
+        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
+            if tela_atual == "INICIO":
+                if btn_jogar.collidepoint(evento.pos):
+                    tela_atual = "REGRAS"
 
-        pygame.display.set_caption(
-            f"{TITULO_JOGO} | Pontos: {pontos} | Recorde: {recorde} | Vidas: {vidas}"
-        )
+            elif tela_atual == "REGRAS":
+                
+                # Clique no botão ou em qualquer lugar para avançar pro jogo
+                if btn_continuar.collidepoint(evento.pos):
+                    tela_atual = "JOGO"
+            
 
-        tela.fill(CINZA)
+            elif tela_atual == "JOGO":
+                if btn_valido.collidepoint(evento.pos):
+                    print("VÁLIDO!")
+                elif btn_invalido.collidepoint(evento.pos):
+                    print("INVÁLIDO!")
+                elif btn_bloqueado.collidepoint(evento.pos):
+                    print("BLOQUEADO!")
 
-        # Desenhando os elementos na tela passando a imagem e o rect de cada dicionário
-        tela.blit(gema["imagem"], gema["rect"])
-        tela.blit(inimigo["imagem"], inimigo["rect"])
-        tela.blit(jogador["imagem"], jogador["rect"])
+        # Teclado (Enter avança das regras para o jogo)
+        if evento.type == pygame.KEYDOWN:
+            if tela_atual == "REGRAS" and evento.key == pygame.K_RETURN:
+                tela_atual = "JOGO"
 
-        pygame.display.flip()
+    # 2. DESENHO DAS TELAS (Separado por estado!)
+    if tela_atual == "INICIO":
+        tela.blit(fundo_primeira, (0, 0))
+        txt_valido = fonte.render("JOGAR", True, (0, 0, 0))
+        tela.blit(txt_valido, txt_valido.get_rect(center=btn_jogar.center))
+        # Se a sua imagem pag2.jpg já tiver o botão desenhado, não precisa desenhar retângulo
 
-    pygame.quit()
+    elif tela_atual == "REGRAS":
+        tela.blit(fundo_segunda, (0, 0))
+       
+        txt_cont = fonte.render("INICIAR", True, (0, 0, 0))
+        tela.blit(txt_cont, txt_cont.get_rect(center=btn_continuar.center))
+
+    elif tela_atual == "JOGO":
+        tela.blit(fundo_escritorio, (0, 0))
+
+        # Renderizar e centralizar os textos dentro de cada Rect
+        txt_valido = fonte.render("VÁLIDO", True, (0, 0, 0))
+        tela.blit(txt_valido, txt_valido.get_rect(center=btn_valido.center))
+
+        txt_invalido = fonte.render("INVÁLIDO", True, (0, 0, 0))
+        tela.blit(txt_invalido, txt_invalido.get_rect(center=btn_invalido.center))
+
+        txt_bloqueado = fonte.render("BLOQUEADO", True, (0, 0, 0))
+        tela.blit(txt_bloqueado, txt_bloqueado.get_rect(center=btn_bloqueado.center))
+
+    pygame.display.flip()
+    relogio.tick(60)
+
+pygame.quit()
+sys.exit()
