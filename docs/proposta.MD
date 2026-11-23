@@ -8,7 +8,7 @@ A proposta deve apresentar uma ideia simples, clara e viável para ser desenvolv
 
 **Nome:**
 
-> RPG: Sistema de validação
+> Firewall.IA
 
 ## 2. Integrantes do grupo
 
@@ -98,3 +98,4 @@ A proposta deve apresentar uma ideia simples, clara e viável para ser desenvolv
 - Melhoria 1: Adicionar efeitos sonoros para acertos, erros e alerta de invasão hacker.
 - Melhoria 2: Implementar um sistema de ranking salvando as melhores pontuações em arquivo.
 - Melhoria 3: Adicionar um temporizador por ficha ou níveis de dificuldade com dados mais sutis para analisar.
+
