@@ -22,15 +22,15 @@ FICHAS = [
     },
     {
         "nome": "Grok",
-        "idade": "F45D98A666",
+        "idade": "IF45D98A666",
         "cep": "EUA",
         "tipo": "hacker",
         "imagem": "assets/imagens/personagens/grok.png"
     },
     {
         "nome": "Sam",
-        "idade": "RAM RAM RAM RAM RAM RAM RAM",
-        "cep": "EUA",
+        "idade": "RAM RAM RAM RAM",
+        "cep": "if Sam: return True",
         "tipo": "hacker",
         "imagem": "assets/imagens/personagens/sam.png"
     },
@@ -58,7 +58,7 @@ FICHAS = [
     {
         "nome": "Bryan Smith",
         "idade": "25",
-        "cep": "Portugal",
+        "cep": "Portugual",
         "tipo": "Invalido",
         "imagem": "assets/imagens/personagens/bryan_smith.png"
     },

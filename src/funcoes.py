@@ -18,7 +18,7 @@ MENSAGENS_FINAIS = {
 
 
 def avaliar_escolha(ficha, escolha_jogador, pontos_atuais, houve_invasao, houve_erro):
-    tipo_real = ficha["tipo"]
+    tipo_real = ficha["tipo"].lower()
 
     if (tipo_real, escolha_jogador) in ESCOLHAS_DE_INVASAO:
         pontos_atuais = 0
